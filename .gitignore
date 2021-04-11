@@ -53,3 +53,7 @@ dkms.conf
 
 # VS code
 .vscode/
+
+# Project Specific
+Output.txt
+main
