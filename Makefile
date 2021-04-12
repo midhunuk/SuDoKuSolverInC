@@ -14,4 +14,4 @@ FileOperation.o: FileOperation.c
 	$(CC) $(CFLAGS) FileOperation.c
 
 clean: 
-	rm -rf *o main
+	rm -rf *o sudokuSolver
