@@ -1,12 +1,12 @@
 #include<stdio.h>
 
-struct Cell
+typedef struct 
 {
     int row;
     int column;
     int block;
     int value;
-};
+} CELL;
 
 void InitializeEmptyBoard();
 
