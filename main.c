@@ -1,20 +1,11 @@
 #include<stdio.h>
-
-void CopyFile(FILE* fromFile, FILE* toFile)
-{
-    char reader;
-    while (!feof(fromFile))
-    {
-        fscanf(fromFile, "%c", &reader);
-        fprintf(toFile, "%c", reader);
-    }
-    
-}
+#include"FileOperation.h"
 
 int main()
 {
     FILE* inputFile;
     char* fileName = "Input.txt";
+    printf("Test string");
     if((inputFile = fopen(fileName, "r"))== NULL)
     {
         printf("File could not be opened %s \n", fileName);
@@ -33,7 +24,7 @@ int main()
     fclose(inputFile);
     fclose(outputFile);
 
-    int a;
-    scanf("%d", &a);
+    // int a;
+    // scanf("%d", &a);
     return 0;
 }

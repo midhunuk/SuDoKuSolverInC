@@ -56,4 +56,4 @@ dkms.conf
 
 # Project Specific
 Output.txt
-main
+sudokuSolver
