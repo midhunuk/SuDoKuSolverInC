@@ -1,30 +1,44 @@
 #include<stdio.h>
-#include"FileOperation.h"
+#include"SuDoKu.h"
 
 int main()
 {
     FILE* inputFile;
-    char* fileName = "Input.txt";
-    printf("Test string");
-    if((inputFile = fopen(fileName, "r"))== NULL)
+	FILE* outputFile;
+    char* inputFileName = "Input.txt";
+    char* outputfileName = "Output.txt";
+    printf("Reading input file \n");
+    if((inputFile = fopen(inputFileName, "r"))== NULL)
     {
-        printf("File could not be opened %s \n", fileName);
+        printf("File could not be opened %s \n", inputFileName);
         perror("Error :");
         return 1;
     }
-    FILE* outputFile;
-    char* outputfileName = "Output.txt";
+	InitializeEmptyBoard();
+	AddInitialValues(inputFile);
+	fclose(inputFile);
+
+	printf("Su Do Ku Puzzle \n");
+	PrintBoard(stdout);
+
+	printf("Solving Puzzle ...\n");	
+	Solve();
+
+	printf("Solved Puzzle \n");	
+    PrintBoard(stdout); 
+
+	printf("Printing to output file \n");	
     if((outputFile = fopen(outputfileName, "w"))== NULL)
     {
-        printf("File could not be opened %s \n", fileName);
+        printf("File could not be opened %s \n", inputFileName);
         perror("Error :");
         return 1;
     }
-    CopyFile(inputFile, outputFile);
-    fclose(inputFile);
+
+    PrintBoard(outputFile);  
     fclose(outputFile);
 
-    // int a;
-    // scanf("%d", &a);
+	printf("Closing game \n");
+	DeleteBoard();
     return 0;
 }
