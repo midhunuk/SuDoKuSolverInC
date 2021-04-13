@@ -7,17 +7,15 @@ void DrawLine(FILE*);
 
 CELL Grid[9][9];
 
+BLOCK blocks[9] = {{0,0},{0,3},{0,6},{3,0},{3,3},{3,6},{6,0},{6,3},{6,6}};
+
 void InitializeEmptyBoard()
 {
-   InitializeBlock(0,0,0); 
-   InitializeBlock(0,3,1);
-   InitializeBlock(0,6,2);
-   InitializeBlock(3,0,3);
-   InitializeBlock(3,3,4);
-   InitializeBlock(3,6,5);
-   InitializeBlock(6,0,6);
-   InitializeBlock(6,3,7);
-   InitializeBlock(6,6,8);
+    for (int blockNumber = 0; blockNumber < 9; blockNumber++)
+    {
+        BLOCK currentBlock = blocks[blockNumber];
+        InitializeBlock(currentBlock.rowStart, currentBlock.columnStart, blockNumber);
+    }
 }
 
 void AddInitialValues(FILE * inputfile)
