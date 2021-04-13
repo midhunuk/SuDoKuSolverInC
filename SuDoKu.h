@@ -8,6 +8,13 @@ typedef struct
     int value;
 } CELL;
 
+
+typedef struct 
+{
+    int rowStart;
+    int columnStart;
+} BLOCK;
+
 void InitializeEmptyBoard();
 
 void AddInitialValues(FILE * );
