@@ -4,6 +4,8 @@
 
 void InitializeBlock(int,int,int);
 void DrawLine(FILE*);
+void Solution1();
+int Solution1Loop();
 
 CELL Grid[9][9];
 
@@ -42,7 +44,7 @@ void AddInitialValues(FILE * inputfile)
 
 void Solve()
 {
-
+    Solution1();
 }
 
 void PrintBoard(FILE * outputFile)
@@ -106,4 +108,68 @@ void DrawLine(FILE* outputFile)
        fprintf(outputFile,"=");  
     }
     fprintf(outputFile,"\n");
+}
+
+void Solution1()
+{
+    int unFoundValue = 1;
+    while (unFoundValue > 0)
+    {
+         unFoundValue = Solution1Loop();
+    }
+    
+}
+
+int Solution1Loop()
+{
+    int unFoundValue = 0;
+    for (int row = 0; row < 9; row++)
+    {
+        for (int column = 0; column < 9; column++)
+        {
+            if(Grid[row][column].value != 0) 
+            {
+                continue;
+            }
+            int possibleVales[10] = {0};
+
+            // Check row and column
+            for (int index = 0; index < 9; index++)
+            {
+                possibleVales[(Grid[index][column].value)] = -1;
+                possibleVales[(Grid[row][index].value)] = -1;
+            }
+
+            // Check block
+            BLOCK block = blocks[Grid[row][column].block];
+            for (int row = block.rowStart; row < block.rowStart+3; row++)
+            {
+                for (int j = block.columnStart; j < block.columnStart+3; j++)
+                {
+                   possibleVales[(Grid[row][j].value)] = -1; 
+                }
+            }
+            
+            int possibleValueCount=0;
+            int possibleValue;
+            for (int i = 1; i < 10; i++)
+            {
+                if(possibleVales[i]==0)
+                {
+                    possibleValueCount++;
+                    possibleValue = i;
+                }
+            }
+            
+            if(possibleValueCount == 1)
+            {
+                Grid[row][column].value = possibleValue;
+            }
+            else
+            {
+                unFoundValue++;
+            }
+        }
+    } 
+    return unFoundValue;
 }
