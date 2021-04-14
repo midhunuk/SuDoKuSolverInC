@@ -14,7 +14,7 @@ int main()
         perror("Error :");
         return 1;
     }
-	InitializeEmptyBoard();
+	
 	AddInitialValues(inputFile);
 	fclose(inputFile);
 
@@ -39,6 +39,5 @@ int main()
     fclose(outputFile);
 
 	printf("Closing game \n");
-	DeleteBoard();
     return 0;
 }

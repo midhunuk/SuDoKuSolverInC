@@ -7,18 +7,7 @@ void DrawLine(FILE*);
 void Solution1();
 int Solution1Loop();
 
-CELL Grid[9][9];
-
-BLOCK blocks[9] = {{0,0},{0,3},{0,6},{3,0},{3,3},{3,6},{6,0},{6,3},{6,6}};
-
-void InitializeEmptyBoard()
-{
-    for (int blockNumber = 0; blockNumber < 9; blockNumber++)
-    {
-        BLOCK currentBlock = blocks[blockNumber];
-        InitializeBlock(currentBlock.rowStart, currentBlock.columnStart, blockNumber);
-    }
-}
+int Grid[9][9];
 
 void AddInitialValues(FILE * inputfile)
 {
@@ -35,7 +24,11 @@ void AddInitialValues(FILE * inputfile)
             if(reader != '-')
             {
                 int value = atoi(&reader);
-                Grid[i][j].value = value;
+                Grid[i][j] = value;
+            }
+            else
+            {
+                Grid[i][j] = 0;
             }
         }
         
@@ -58,7 +51,7 @@ void PrintBoard(FILE * outputFile)
             {
                fprintf(outputFile,"| "); 
             }
-            int value = Grid[row][column].value;
+            int value = Grid[row][column];
             if(value == 0)
             {
                fprintf(outputFile,"- "); 
@@ -80,25 +73,6 @@ void PrintBoard(FILE * outputFile)
              DrawLine(outputFile);
         }
     }
-}
-
-void DeleteBoard()
-{
-}
-
-void InitializeBlock(int rowStart,int columnStart, int block)
-{
-    for (int i = rowStart; i < rowStart+3; i++)
-    {
-        for (int j = columnStart; j < columnStart+3; j++)
-        {
-            CELL* cell = &Grid[i][j];
-            cell->row = i;
-            cell->column = j;
-            cell->block = block;
-        }
-    }
-    
 }
 
 void DrawLine(FILE* outputFile)
@@ -127,7 +101,7 @@ int Solution1Loop()
     {
         for (int column = 0; column < 9; column++)
         {
-            if(Grid[row][column].value != 0) 
+            if(Grid[row][column] != 0) 
             {
                 continue;
             }
@@ -136,17 +110,18 @@ int Solution1Loop()
             // Check row and column
             for (int index = 0; index < 9; index++)
             {
-                possibleVales[(Grid[index][column].value)] = -1;
-                possibleVales[(Grid[row][index].value)] = -1;
+                possibleVales[(Grid[index][column])] = -1;
+                possibleVales[(Grid[row][index])] = -1;
             }
 
             // Check block
-            BLOCK block = blocks[Grid[row][column].block];
-            for (int row = block.rowStart; row < block.rowStart+3; row++)
+            int rowStart = row - row%3;
+            int columnStart = column - column%3;
+            for (int row = rowStart; row < rowStart+3; row++)
             {
-                for (int j = block.columnStart; j < block.columnStart+3; j++)
+                for (int j = columnStart; j < columnStart+3; j++)
                 {
-                   possibleVales[(Grid[row][j].value)] = -1; 
+                   possibleVales[(Grid[row][j])] = -1; 
                 }
             }
             
@@ -163,7 +138,7 @@ int Solution1Loop()
             
             if(possibleValueCount == 1)
             {
-                Grid[row][column].value = possibleValue;
+                Grid[row][column] = possibleValue;
             }
             else
             {
