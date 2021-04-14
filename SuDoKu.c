@@ -75,10 +75,6 @@ void PrintBoard(FILE * outputFile)
     }
 }
 
-void DeleteBoard()
-{
-}
-
 void DrawLine(FILE* outputFile)
 {
     for (int i = 0; i < 25; i++)
